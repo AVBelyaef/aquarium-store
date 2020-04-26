@@ -1,0 +1,35 @@
+{
+  "name": "aquarium-store",
+  "version": "1.0.0",
+  "description": "Online store for selling aquariums",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AVBelyaef/aquarium-store.git"
+  },
+  "author": "AVBelyaef@ya.ru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AVBelyaef/aquarium-store/issues"
+  },
+  "homepage": "https://github.com/AVBelyaef/aquarium-store#readme"
+}
