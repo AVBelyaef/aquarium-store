@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
       userdata: user,
     });
   } catch (error) {
-    res.json({ success: false, error });
+    res.status(500).json({ success: false, error });
   }
 });
 
