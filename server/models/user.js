@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const saltRounds = 10;
 
@@ -52,5 +54,28 @@ userSchema.pre('save', async function save(next) {
     return next(err);
   }
 });
+
+userSchema.methods.comparePassword = function comparePas(
+  candidatePassword,
+  cb,
+) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    return cb(null, isMatch);
+  });
+};
+
+userSchema.methods.generateToken = function generate(cb) {
+  const user = this;
+  // eslint-disable-next-line no-underscore-dangle
+  const token = jwt.sign(user._id.toHexString(), process.env.SECRET);
+
+  user.token = token;
+  // eslint-disable-next-line no-shadow
+  user.save((err, user) => {
+    if (err) return cb(err);
+    return cb(null, user);
+  });
+};
 
 module.exports = mongoose.model('User', userSchema);
