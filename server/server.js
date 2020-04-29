@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+
+// Routes
 const usersRouter = require('./routes/users');
 
 app.use('/api/users', usersRouter);

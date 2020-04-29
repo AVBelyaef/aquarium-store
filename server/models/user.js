@@ -57,7 +57,7 @@ userSchema.pre('save', async function save(next) {
 
 userSchema.methods.comparePassword = function comparePas(
   candidatePassword,
-  cb,
+  cb
 ) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return cb(err);
@@ -77,5 +77,18 @@ userSchema.methods.generateToken = function generate(cb) {
     return cb(null, user);
   });
 };
+
+userSchema.statics.findByToken = async function find(token) {
+  const user = this;
+  try {
+    const decode = await jwt.verify(token, process.env.SECRET);
+    const currentUser = await user.findOne({ _id: decode, token });
+    return currentUser;
+  } catch (err) {
+    // err
+    return err;
+  }
+};
+
 
 module.exports = mongoose.model('User', userSchema);

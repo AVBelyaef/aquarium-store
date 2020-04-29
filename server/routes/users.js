@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const User = require('../models/user');
+// Middlewares
+const { auth } = require('../middleware/auth');
 
 router.post('/register', async (req, res) => {
   try {
@@ -42,6 +44,18 @@ router.post('/login', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json(error);
+  }
+});
+
+router.get('/logout', auth, async (req, res) => {
+  try {
+    const { _id } = req.user;
+    await User.findOneAndUpdate({ _id }, { token: '' });
+    return res.status(200).send({
+      success: true,
+    });
+  } catch (error) {
+    return res.json({ success: false, error });
   }
 });
 
