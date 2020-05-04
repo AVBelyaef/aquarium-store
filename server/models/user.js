@@ -55,27 +55,28 @@ userSchema.pre('save', async function save(next) {
   }
 });
 
-userSchema.methods.comparePassword = function comparePas(
+userSchema.methods.comparePassword = async function comparePas(
   candidatePassword,
-  cb
 ) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    return cb(null, isMatch);
-  });
+  try {
+    const match = await bcrypt.compare(candidatePassword, this.password);
+    return match;
+  } catch (error) {
+    return error;
+  }
 };
 
-userSchema.methods.generateToken = function generate(cb) {
+userSchema.methods.generateToken = async function generate() {
   const user = this;
-  // eslint-disable-next-line no-underscore-dangle
-  const token = jwt.sign(user._id.toHexString(), process.env.SECRET);
-
-  user.token = token;
-  // eslint-disable-next-line no-shadow
-  user.save((err, user) => {
-    if (err) return cb(err);
-    return cb(null, user);
-  });
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const token = jwt.sign(user._id.toHexString(), process.env.SECRET);
+    user.token = token;
+    const tokenUser = await user.save();
+    return tokenUser;
+  } catch (error) {
+    return error;
+  }
 };
 
 userSchema.statics.findByToken = async function find(token) {
@@ -89,6 +90,5 @@ userSchema.statics.findByToken = async function find(token) {
     return err;
   }
 };
-
 
 module.exports = mongoose.model('User', userSchema);
