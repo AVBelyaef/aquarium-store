@@ -13,6 +13,16 @@ const productSchema = Schema(
       type: String,
       maxlength: 100000,
     },
+    form: {
+      required: true,
+      type: String,
+      maxlength: 20,
+    },
+    size: {
+      required: true,
+      type: Number,
+      maxlength: 5,
+    },
     price: {
       required: true,
       type: Number,

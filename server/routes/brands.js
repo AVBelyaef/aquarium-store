@@ -2,7 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 const Brand = require('../models/brand');
-const { auth } = require('../middleware/auth');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+
 
 router
   .route('/')
@@ -15,7 +17,7 @@ router
     }
   })
   // add admin check
-  .post(auth, async (req, res) => {
+  .post(auth, admin, async (req, res) => {
     try {
       const brand = new Brand(req.body);
       const data = await brand.save();

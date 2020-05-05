@@ -7,6 +7,15 @@ const brandSchema = new Schema({
     unique: true,
     maxlength: 20,
   },
+  description: {
+    required: true,
+    type: String,
+    maxlength: 100000,
+  },
+  images: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = model('Brand', brandSchema);

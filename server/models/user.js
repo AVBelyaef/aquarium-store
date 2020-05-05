@@ -87,7 +87,7 @@ userSchema.statics.findByToken = async function find(token) {
     return currentUser;
   } catch (err) {
     // err
-    return err;
+    return { token: false, err };
   }
 };
 

@@ -4,7 +4,7 @@ const auth = async (req, res, next) => {
   const token = req.cookies.w_auth;
   try {
     const user = await User.findByToken(token);
-    if (!user) {
+    if (!user.token) {
       return res.json({
         isAuth: false,
         error: true,
@@ -18,4 +18,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = { auth };
+module.exports = auth;

@@ -18,9 +18,11 @@ app.use(cookieParser());
 // Routes
 const usersRouter = require('./routes/users');
 const brandsRouter = require('./routes/brands');
+const productsRouter = require('./routes/products');
 
 app.use('/api/users', usersRouter);
 app.use('/api/brands', brandsRouter);
+app.use('/api/products', productsRouter);
 
 const port = process.env.PORT || 5000;
 
